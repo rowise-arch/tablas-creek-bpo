@@ -305,7 +305,7 @@
         .form-group input.error, .form-group select.error, .form-group textarea.error { border-color: var(--error); }
         .error-message { color: var(--error); font-size: 0.75rem; margin-top: var(--space-1); display: block; }
         
-        /* Modal Styles */
+        /* Modal Styles - FULL WIDTH FIX */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -332,13 +332,16 @@
             background-color: white;
             border-radius: 24px;
             width: 90%;
-            max-width: 900px;
+            max-width: 1000px;
+            height: 85vh;
             max-height: 85vh;
             position: relative;
             transform: scale(0.95);
             transition: transform var(--transition-normal);
             overflow: hidden;
             box-shadow: var(--shadow-xl);
+            display: flex;
+            flex-direction: column;
         }
         
         .modal-overlay.active .modal-container {
@@ -352,6 +355,7 @@
             padding: var(--space-4) var(--space-6);
             border-bottom: 1px solid var(--border);
             background-color: white;
+            flex-shrink: 0;
         }
         
         .modal-header h3 {
@@ -383,32 +387,25 @@
         }
         
         .modal-body {
-            padding: var(--space-6);
-            overflow-y: auto;
-            max-height: calc(85vh - 70px);
+            padding: 0;
+            overflow: hidden;
+            flex: 1;
+            min-height: 0;
         }
         
         .calendly-embed {
-            min-height: 1300px;
             width: 100%;
+            height: 100%;
+            min-height: 500px;
         }
         
-        @media (max-width: 768px) {
-            .modal-container {
-                width: 95%;
-                max-height: 90vh;
-            }
-            .calendly-embed {
-                min-height: 550px;
-            }
-            .modal-body {
-                padding: var(--space-4);
-            }
-        }
-        
-        /* Prevent body scroll when modal is open */
-        body.modal-open {
-            overflow: hidden;
+        /* Override Calendly's default inline widget styles */
+        .calendly-inline-widget,
+        .calendly-inline-widget iframe,
+        .calendly-embed iframe {
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 500px !important;
         }
         
         /* CTA Banner */
@@ -423,6 +420,11 @@
         .footer-tagline { font-size: 0.7rem; color: var(--border); margin-bottom: var(--space-6); }
         .footer-copyright { font-size: 0.75rem; color: rgba(255, 255, 255, 0.5); margin-top: var(--space-6); }
         
+        /* Prevent body scroll when modal is open */
+        body.modal-open {
+            overflow: hidden;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .hero-grid { flex-direction: column; }
@@ -431,6 +433,18 @@
             .hero h1, .hero-subheadline { text-align: center; }
             section { padding: var(--space-8) 0; }
             .blockquote p { font-size: 1rem; }
+            
+            .modal-container {
+                width: 95%;
+                height: 90vh;
+                max-height: 90vh;
+            }
+            
+            .calendly-inline-widget,
+            .calendly-inline-widget iframe,
+            .calendly-embed iframe {
+                min-height: 550px !important;
+            }
         }
         
         @media (prefers-reduced-motion: reduce) {
@@ -512,10 +526,10 @@
                     <table>
                         <thead><tr><th>Feature</th><th>The Corporate Giant Approach</th><th>The Tablas Creek Advantage</th></tr></thead>
                         <tbody>
-                            <tr><td>Talent Retention</td><td>High turnover rates, disconnected transactional staff</td><td>Deeply loyal, highly motivated local career professionals</td</tr>
-                            <tr><td>Communication</td><td>Rigid, automated layers, impersonal support</td><td>Direct, agile collaboration built on clear operational alignment</td</tr>
-                            <tr><td>Quality Control</td><td>Automated, volume-based output lacking scrutiny</td><td>Meticulous oversight driven by a community proud of its work</td</tr>
-                            <tr><td>Social Impact</td><td>Purely transactional operations</td><td>Directly fuels sustainable economic growth in a rising talent hub</td</tr>
+                            <tr><td>Talent Retention</td><td>High turnover rates, disconnected transactional staff</td><td>Deeply loyal, highly motivated local career professionals</td></tr>
+                            <tr><td>Communication</td><td>Rigid, automated layers, impersonal support</td><td>Direct, agile collaboration built on clear operational alignment</td></tr>
+                            <tr><td>Quality Control</td><td>Automated, volume-based output lacking scrutiny</td><td>Meticulous oversight driven by a community proud of its work</td></tr>
+                            <tr><td>Social Impact</td><td>Purely transactional operations</td><td>Directly fuels sustainable economic growth in a rising talent hub</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -593,7 +607,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Calendly inline widget embed -->
                 <div class="calendly-embed" data-calendly-url="https://calendly.com/jeffreyrouisse/30min"></div>
             </div>
         </div>
@@ -610,24 +623,13 @@
         // Get modal elements
         const modal = document.getElementById('calendlyModal');
         const closeModalBtn = document.getElementById('closeModalBtn');
+        let calendlyLoaded = false;
         
-        // Function to open modal
-        function openModal() {
-            modal.classList.add('active');
-            document.body.classList.add('modal-open');
-            
-            // Track modal open in Google Analytics
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'modal_open', {
-                    'event_category': 'engagement',
-                    'event_label': 'calendly_modal_opened'
-                });
-            }
-            
-            // Load Calendly widget dynamically if not already loaded
-            if (!document.querySelector('.calendly-inline-widget')) {
+        // Function to load Calendly
+        function loadCalendly() {
+            if (!calendlyLoaded && typeof Calendly !== 'undefined') {
                 const calendlyDiv = document.querySelector('.calendly-embed');
-                if (calendlyDiv) {
+                if (calendlyDiv && !calendlyDiv.hasAttribute('data-calendly-loaded')) {
                     const url = calendlyDiv.getAttribute('data-calendly-url');
                     Calendly.initInlineWidget({
                         url: url,
@@ -635,7 +637,26 @@
                         prefill: {},
                         utm: {}
                     });
+                    calendlyDiv.setAttribute('data-calendly-loaded', 'true');
+                    calendlyLoaded = true;
                 }
+            }
+        }
+        
+        // Function to open modal
+        function openModal() {
+            modal.classList.add('active');
+            document.body.classList.add('modal-open');
+            
+            // Load Calendly when modal opens
+            setTimeout(loadCalendly, 100);
+            
+            // Track modal open in Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'modal_open', {
+                    'event_category': 'engagement',
+                    'event_label': 'calendly_modal_opened'
+                });
             }
         }
         
@@ -776,7 +797,7 @@
         }
         
         // Track service card clicks
-        document.querySelectorAll('.card').forEach((card, index) => {
+        document.querySelectorAll('.card').forEach((card) => {
             card.addEventListener('click', function() {
                 const title = this.querySelector('h3')?.textContent || 'Unknown';
                 if (typeof gtag !== 'undefined') {
