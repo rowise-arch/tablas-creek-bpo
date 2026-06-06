@@ -1,581 +1,885 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Tablas Creek Global — Offshore Talent, Uncompromising Craft</title>
-  <!-- Distinctive fonts: Playfair Display (dramatic serif) + DM Sans (geometric confidence) -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    /* CUSTOM PROPERTIES — Cohesive aesthetic */
-    :root {
-      --charcoal: #1a1a1a;
-      --charcoal-soft: #2a2a2a;
-      --stone: #e8e4d9;
-      --stone-dark: #cfc9bc;
-      --rust: #c45a3b;
-      --rust-light: #d97a5c;
-      --offwhite: #faf7f2;
-      --grain-opacity: 0.035;
-      
-      /* Typography */
-      --serif: 'Playfair Display', 'Times New Roman', serif;
-      --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      
-      /* Easing — distinctive, snappy */
-      --ease-exit: cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
-    }
-
-    body {
-      font-family: var(--sans);
-      background-color: var(--offwhite);
-      color: var(--charcoal);
-      line-height: 1.4;
-      overflow-x: hidden;
-    }
-
-    /* NOISE TEXTURE OVERLAY — "Tablas Creek Grain" */
-    .grain-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 999;
-      opacity: var(--grain-opacity);
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      mix-blend-mode: multiply;
-    }
-
-    /* DIAGONAL DRIFT ELEMENTS — grid-breaking */
-    .drift-line {
-      position: absolute;
-      width: 200%;
-      height: 1px;
-      background: var(--rust);
-      opacity: 0.3;
-      transform: rotate(-5deg);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* Layout containers */
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Typography — distinctive, dramatic */
-    h1, h2, h3, .logo {
-      font-family: var(--serif);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-
-    h1 {
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-      font-weight: 700;
-    }
-
-    h2 {
-      font-size: clamp(2rem, 4.5vw, 3.5rem);
-      margin-bottom: 1rem;
-      font-weight: 600;
-      position: relative;
-      display: inline-block;
-    }
-
-    /* Rust underline accent */
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 0;
-      width: 60px;
-      height: 3px;
-      background: var(--rust);
-      transition: width 0.3s var(--ease-exit);
-    }
-
-    .section-subhead {
-      font-size: 1.1rem;
-      color: var(--charcoal-soft);
-      max-width: 560px;
-      margin-top: 1.2rem;
-      font-weight: 400;
-    }
-
-    /* Buttons — tactile, press feedback, no generic hover */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem 2rem;
-      font-family: var(--sans);
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 0;
-      transition: transform 160ms var(--ease-exit), background 200ms, color 200ms;
-      cursor: pointer;
-      border: none;
-      position: relative;
-      z-index: 2;
-    }
-
-    .btn:active {
-      transform: scale(0.96);
-    }
-
-    .btn-primary {
-      background: var(--charcoal);
-      color: var(--offwhite);
-    }
-
-    .btn-primary:hover {
-      background: var(--rust);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--charcoal);
-      border: 1.5px solid var(--charcoal);
-    }
-
-    .btn-secondary:hover {
-      background: var(--charcoal);
-      color: var(--offwhite);
-      border-color: var(--charcoal);
-    }
-
-    /* Navigation — minimalist, refined */
-    .navbar {
-      padding: 2rem 0;
-      position: sticky;
-      top: 0;
-      background: rgba(250, 247, 242, 0.92);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .navbar .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      text-decoration: none;
-      color: var(--charcoal);
-    }
-
-    .logo span {
-      color: var(--rust);
-      font-weight: 800;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      align-items: center;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      font-family: var(--sans);
-      font-weight: 500;
-      font-size: 0.85rem;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: var(--charcoal-soft);
-      transition: color 160ms var(--ease-exit);
-    }
-
-    .nav-links a:hover {
-      color: var(--rust);
-    }
-
-    /* HERO — asymmetric layout */
-    .hero {
-      padding: 5rem 0 8rem;
-      position: relative;
-      background: linear-gradient(135deg, var(--offwhite) 0%, var(--stone) 100%);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 0.8fr;
-      gap: 4rem;
-      align-items: start;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      font-family: var(--sans);
-      font-weight: 600;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.8rem;
-      background: var(--rust);
-      color: var(--offwhite);
-      margin-bottom: 1.8rem;
-    }
-
-    .hero-stats {
-      margin-top: 2rem;
-      display: flex;
-      gap: 2rem;
-      border-top: 2px solid var(--charcoal);
-      padding-top: 1.5rem;
-    }
-
-    .stat {
-      font-family: var(--serif);
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--rust);
-    }
-
-    .stat-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--charcoal-soft);
-    }
-
-    .hero-quote {
-      background: var(--charcoal);
-      padding: 2rem;
-      color: var(--offwhite);
-      margin-top: 2rem;
-      position: relative;
-    }
-    .hero-quote p {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 1rem;
-    }
-
-    /* Editorial / Story — broken grid, overlap */
-    .story-grid {
-      display: grid;
-      grid-template-columns: 1fr 0.6fr;
-      gap: 3rem;
-      position: relative;
-    }
-    .story-text p {
-      margin-bottom: 1.2rem;
-      color: var(--charcoal-soft);
-      line-height: 1.6;
-    }
-    .story-highlight {
-      background: var(--stone);
-      padding: 2rem;
-      position: relative;
-      top: 2rem;
-      border-left: 6px solid var(--rust);
-    }
-
-    /* 3-Column Cards — industrial, raw */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-
-    .service-card {
-      background: var(--offwhite);
-      padding: 2rem;
-      border: 1px solid var(--stone-dark);
-      transition: transform 0.25s var(--ease-exit), box-shadow 0.3s;
-    }
-
-    .service-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 20px 20px 0 rgba(196, 90, 59, 0.1);
-    }
-
-    .service-icon {
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .service-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .service-card ul {
-      list-style: none;
-      margin-top: 1rem;
-    }
-    .service-card li {
-      font-size: 0.85rem;
-      padding-left: 1rem;
-      margin-bottom: 0.4rem;
-      border-left: 2px solid var(--rust);
-    }
-
-    /* Matrix table — stripped, editorial */
-    .matrix-table {
-      background: var(--offwhite);
-      border: 1px solid var(--charcoal);
-      overflow-x: auto;
-    }
-    .matrix-table table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .matrix-table th, .matrix-table td {
-      padding: 1.25rem;
-      text-align: left;
-      border-bottom: 1px solid var(--stone-dark);
-      font-size: 0.85rem;
-    }
-    .matrix-table th {
-      background: var(--charcoal);
-      color: var(--offwhite);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .advantage-text {
-      color: var(--rust);
-      font-weight: 600;
-    }
-
-    /* Stepped workflow — asymmetric stagger */
-    .steps-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 3rem;
-    }
-    .step-item {
-      flex: 1;
-      background: var(--stone);
-      padding: 2rem 1.5rem;
-      transition: all 0.2s;
-    }
-    .step-number {
-      font-family: var(--serif);
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--rust);
-      margin-bottom: 1rem;
-    }
-
-    /* CTA banner — dramatic, full width rust */
-    .cta-banner {
-      background: var(--charcoal);
-      color: var(--offwhite);
-      text-align: center;
-      padding: 4rem 2rem;
-      position: relative;
-      border-top: 4px solid var(--rust);
-    }
-    .cta-banner h2 {
-      color: var(--offwhite);
-    }
-    .cta-banner h2::after {
-      background: var(--rust);
-      width: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    /* stagger animations with delay */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s var(--ease-move), transform 0.7s var(--ease-move);
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* media queries */
-    @media (max-width: 900px) {
-      .hero-grid, .story-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
-      .navbar .container {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      .nav-links {
-        gap: 1.2rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .container {
-        padding: 0 1.2rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .fade-up, .service-card, .btn:active {
-        transition: none;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Tablas Creek - Global Enterprise Solutions with handcrafted local talent in Accounting, Engineering, and Digital Infrastructure.">
+    <title>Tablas Creek | Global BPO Solutions</title>
+    
+    <!-- Google Fonts - Playfair Display (premium serif) + Inter (clean sans) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons (SVG - no emojis) -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <style>
+        /* ============================================ */
+        /* DESIGN TOKENS - from UI/UX Pro Max skill */
+        /* ============================================ */
+        :root {
+            /* Colors - semantic tokens */
+            --primary: #0F172A;      /* Slate 900 */
+            --primary-light: #1E293B; /* Slate 800 */
+            --secondary: #059669;     /* Emerald 600 */
+            --secondary-light: #10B981; /* Emerald 500 */
+            --accent: #F59E0B;        /* Amber 500 */
+            --background: #FFFFFF;
+            --background-alt: #F8FAFC; /* Slate 50 */
+            --text-primary: #0F172A;
+            --text-secondary: #475569; /* Slate 600 */
+            --text-muted: #94A3B8;    /* Slate 400 */
+            --border: #E2E8F0;        /* Slate 200 */
+            
+            /* Spacing - 8pt system */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 20px;
+            --space-6: 24px;
+            --space-7: 32px;
+            --space-8: 40px;
+            --space-9: 48px;
+            --space-10: 64px;
+            --space-11: 80px;
+            --space-12: 96px;
+            
+            /* Typography */
+            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            
+            /* Shadows - subtle elevation */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-normal: 250ms ease;
+        }
+        
+        /* ============================================ */
+        /* RESET & BASE */
+        /* ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            color: var(--text-primary);
+            background-color: var(--background);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Responsive base font - 16px minimum (WCAG) */
+        html {
+            font-size: 16px;
+        }
+        
+        /* Headings */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Touch targets - minimum 44px (Apple HIG) */
+        button, 
+        .btn,
+        a.btn,
+        [role="button"],
+        .nav-link {
+            min-height: 44px;
+            min-width: 44px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        /* Focus rings - accessibility (WCAG) */
+        button:focus-visible,
+        a:focus-visible,
+        [tabindex]:focus-visible {
+            outline: 2px solid var(--secondary);
+            outline-offset: 2px;
+        }
+        
+        /* Remove focus ring for mouse users, keep for keyboard */
+        button:focus:not(:focus-visible),
+        a:focus:not(:focus-visible) {
+            outline: none;
+        }
+        
+        /* Container - responsive max-width */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+            width: 100%;
+        }
+        
+        /* Section spacing */
+        section {
+            padding: var(--space-10) 0;
+        }
+        
+        .section-alt {
+            background-color: var(--background-alt);
+        }
+        
+        /* ============================================ */
+        /* NAVIGATION */
+        /* ============================================ */
+        .navbar {
+            padding: var(--space-4) 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+        }
+        
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: var(--space-1);
+        }
+        
+        .logo-tagline {
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+            color: var(--secondary);
+            text-transform: uppercase;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: var(--space-6);
+            list-style: none;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: var(--space-2) var(--space-2);
+            transition: color var(--transition-fast);
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+        
+        /* ============================================ */
+        /* BUTTONS */
+        /* ============================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-6);
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-1px);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--secondary);
+            background-color: rgba(5, 150, 105, 0.05);
+        }
+        
+        .btn-outline-light {
+            background-color: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-outline-light:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+        
+        /* ============================================ */
+        /* HERO SECTION */
+        /* ============================================ */
+        .hero {
+            padding: var(--space-10) 0;
+        }
+        
+        .hero-grid {
+            display: flex;
+            gap: var(--space-8);
+            align-items: center;
+        }
+        
+        .hero-content {
+            flex: 1.2;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: var(--space-4);
+            color: var(--primary);
+        }
+        
+        .hero-highlight {
+            color: var(--secondary);
+        }
+        
+        .hero-subheadline {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-8);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+        }
+        
+        .hero-visual {
+            flex: 1;
+            background: linear-gradient(135deg, var(--secondary-light) 0%, var(--secondary) 100%);
+            border-radius: 24px;
+            padding: var(--space-8);
+            text-align: center;
+            color: white;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-4);
+        }
+        
+        .hero-visual svg {
+            width: 80px;
+            height: 80px;
+            stroke: white;
+        }
+        
+        /* ============================================ */
+        /* STORY SECTION (Editorial) */
+        /* ============================================ */
+        .story-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .section-label {
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+            display: inline-block;
+        }
+        
+        .story h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            margin-bottom: var(--space-6);
+            color: var(--primary);
+        }
+        
+        .story-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-6);
+            text-align: left;
+        }
+        
+        .blockquote {
+            background-color: white;
+            padding: var(--space-8);
+            border-radius: 16px;
+            margin: var(--space-6) 0;
+            border-left: 4px solid var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .blockquote p {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            line-height: 1.5;
+            color: var(--primary);
+            font-style: italic;
+            text-align: center;
+        }
+        
+        /* ============================================ */
+        /* SERVICE CARDS */
+        /* ============================================ */
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-10);
+        }
+        
+        .section-header h2 {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            margin-bottom: var(--space-3);
+        }
+        
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            padding: var(--space-6);
+            border: 1px solid var(--border);
+            transition: all var(--transition-normal);
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-4);
+        }
+        
+        .card-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-2);
+            color: var(--primary);
+        }
+        
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: var(--space-4);
+        }
+        
+        .offerings-list {
+            list-style: none;
+            margin-top: var(--space-4);
+        }
+        
+        .offerings-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 0.8125rem;
+            color: var(--text-primary);
+            padding: var(--space-1) 0;
+        }
+        
+        .offerings-list li svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+        
+        /* ============================================ */
+        /* COMPARISON TABLE */
+        /* ============================================ */
+        .comparison-table {
+            background-color: white;
+            border-radius: 16px;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+        }
+        
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--space-4);
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .comparison-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table th:last-child {
+            background-color: var(--secondary);
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table td:first-child {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .comparison-table td:last-child {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+        
+        /* ============================================ */
+        /* TIMELINE / WORKFLOW */
+        /* ============================================ */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-6);
+            text-align: center;
+        }
+        
+        .timeline-step {
+            position: relative;
+        }
+        
+        .timeline-number {
+            width: 56px;
+            height: 56px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 auto var(--space-4);
+        }
+        
+        .timeline-step h3 {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin-bottom: var(--space-2);
+            color: var(--primary);
+        }
+        
+        .timeline-step p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        /* ============================================ */
+        /* CTA BANNER */
+        /* ============================================ */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            text-align: center;
+            padding: var(--space-12) var(--space-6);
+        }
+        
+        .cta-banner h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            color: white;
+            margin-bottom: var(--space-4);
+        }
+        
+        .cta-banner p {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto var(--space-8);
+        }
+        
+        /* ============================================ */
+        /* FOOTER */
+        /* ============================================ */
+        .footer {
+            background-color: var(--primary);
+            color: white;
+            padding: var(--space-8) 0;
+        }
+        
+        .footer .container {
+            text-align: center;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-1);
+        }
+        
+        .footer-tagline {
+            font-size: 0.7rem;
+            color: var(--border);
+            margin-bottom: var(--space-6);
+        }
+        
+        .footer-copyright {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: var(--space-6);
+        }
+        
+        /* ============================================ */
+        /* RESPONSIVE - Mobile First */
+        /* ============================================ */
+        @media (max-width: 768px) {
+            .hero-grid {
+                flex-direction: column;
+            }
+            
+            .navbar .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                text-align: center;
+            }
+            
+            .hero-subheadline {
+                text-align: center;
+            }
+            
+            section {
+                padding: var(--space-8) 0;
+            }
+            
+            .blockquote p {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Reduced motion preference (WCAG) */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
-<div class="grain-overlay"></div>
 
-<nav class="navbar">
-  <div class="container">
-    <a href="#" class="logo">TABLAS CREEK<span>//</span>GLOBAL</a>
-    <div class="nav-links">
-      <a href="#story">Origin</a>
-      <a href="#services">Capabilities</a>
-      <a href="#advantage">Edge</a>
-      <a href="#workflow">Process</a>
-      <a href="#contact" class="btn btn-secondary" style="padding: 0.4rem 1rem;">Engage</a>
-    </div>
-  </div>
-</nav>
-
-<main>
-  <!-- Hero Section -->
-  <section class="hero" id="hero">
-    <div class="container hero-grid">
-      <div>
-        <div class="hero-badge">Enterprise solutions · Offshore craft</div>
-        <h1>Global reach,<br>island precision.</h1>
-        <p style="font-size: 1.1rem; color: var(--charcoal-soft); max-width: 520px;">Tablas Creek Global connects elite offshore professionals in Accounting, Engineering, and Digital Infrastructure with businesses that refuse to settle.</p>
-        <div class="hero-actions" style="display: flex; gap: 1rem; margin-top: 2rem;">
-          <button class="btn btn-primary" id="discoveryBtn">Schedule a discovery →</button>
-          <a href="#services" class="btn btn-secondary">View services</a>
+    <!-- Navigation - Sticky with proper touch targets -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>Tablas Creek</h1>
+                <div class="logo-tagline">Business Process Outsourcing Services</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#story" class="nav-link">Story</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
         </div>
-        <div class="hero-stats">
-          <div><span class="stat">100%</span><div class="stat-label">Retention rate (3+ years)</div></div>
-          <div><span class="stat">&lt;48h</span><div class="stat-label">Average match-to-integrate</div></div>
+    </nav>
+
+    <main>
+        <!-- SECTION 1: HERO -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <h1>
+                        Global Enterprise Solutions.<br>
+                        <span class="hero-highlight">Handcrafted Local Talent.</span>
+                    </h1>
+                    <p class="hero-subheadline">
+                        Tablas Creek connects forward-thinking businesses with elite, offshore professionals 
+                        in Accounting, Engineering, and Digital Infrastructure. Built on a foundation of 
+                        precision, creativity, and resilience.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">Schedule a Discovery Call →</a>
+                        <a href="#services" class="btn btn-secondary">View Our Services</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                    <p>Global talent, local roots</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: BRAND STORY -->
+        <section id="story" class="story section-alt">
+            <div class="container story-container">
+                <span class="section-label">Our Story</span>
+                <h2>The Heart of Tablas: <span style="color: var(--secondary);">Talents Born to Rise</span></h2>
+                
+                <div class="story-text">
+                    <p>Tablas Island is a place of breathtaking beauty, but its greatest treasure has always been its people. Walk through our communities and you will find brilliant minds, meticulous engineers, masterfully creative artists, and world-class financial professionals. They possess a rare blend of exceptional skill, deep dedication, and a natural instinct for perfection.</p>
+                </div>
+                
+                <div class="story-text">
+                    <p>Yet, for decades, a quiet and painful sacrifice has been demanded of our island's finest. Because of a deep lack of local opportunities, some of our most talented professionals are forced to settle for roles that vastly underpay them. Others face an even harder choice: packing a suitcase, leaving the families they love behind, and migrating to crowded cities just to find a career.</p>
+                </div>
+                
+                <div class="story-text">
+                    <p>We believed it was time to rewrite that story.</p>
+                </div>
+                
+                <div class="blockquote">
+                    <p>"We shouldn't have to send our people away to find the world. It's time to bring the world to them."</p>
+                </div>
+                
+                <div class="story-text">
+                    <p>We founded this company to shatter the geographic boundaries holding our community back. By building a direct bridge between global operational demands and the untapped brilliance of Tablas, we are proving that world-class excellence doesn't just come from high-rise offices in major metropolises. It is thriving right here, fueled by the sweat of our brow and a shared passion to excel.</p>
+                </div>
+                
+                <div class="story-text">
+                    <p>When businesses partner with Tablas Creek, they aren't just hiring a vendor. They are choosing a team of fiercely dedicated, profoundly grateful professionals who finally have the global stage they deserve—right from the place they call home.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: SERVICE PILLARS -->
+        <section id="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Core Service Pillars</h2>
+                    <p>Three divisions of excellence, one standard of quality</p>
+                </div>
+                
+                <div class="cards-grid">
+                    <!-- Pillar 1 -->
+                    <div class="card">
+                        <div class="card-icon" style="background-color: rgba(5, 150, 105, 0.1);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                        </div>
+                        <h3>Financial Infrastructure & Accounting</h3>
+                        <p>Transform your numbers into strategic growth. Our university-trained finance and operations management professionals deliver flawless back-office compliance.</p>
+                        <ul class="offerings-list">
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> End-to-end bookkeeping</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Virtual controller support</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Financial planning & analysis</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Audit readiness</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Pillar 2 -->
+                    <div class="card">
+                        <div class="card-icon" style="background-color: rgba(15, 23, 42, 0.1);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                <line x1="8" y1="21" x2="16" y2="21"/>
+                                <line x1="12" y1="17" x2="12" y2="21"/>
+                            </svg>
+                        </div>
+                        <h3>Engineering & Technical Services</h3>
+                        <p>Accelerate your project timelines without compromising on technical precision. Our engineering division handles complex documentation with rigorous accuracy.</p>
+                        <ul class="offerings-list">
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> CAD drafting</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 3D modeling (MEP/Structural)</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Technical estimations</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Quantity surveying</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Pillar 3 -->
+                    <div class="card">
+                        <div class="card-icon" style="background-color: rgba(245, 158, 11, 0.1);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16v16H4z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                                <line x1="12" y1="8" x2="12" y2="4"/>
+                                <line x1="12" y1="20" x2="12" y2="16"/>
+                                <line x1="8" y1="12" x2="4" y2="12"/>
+                                <line x1="20" y1="12" x2="16" y2="12"/>
+                            </svg>
+                        </div>
+                        <h3>Creative Multimedia & IT Services</h3>
+                        <p>Elevate your digital presence and optimize your user experience through striking visual storytelling and robust digital architecture.</p>
+                        <ul class="offerings-list">
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Professional photo/video editing</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Graphic design</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Responsive web design</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> End-to-end web development</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: COMPETITIVE MATRIX -->
+        <section class="section-alt">
+            <div class="container">
+                <div class="section-header">
+                    <h2>The Tablas Creek Advantage</h2>
+                    <p>Compare how we deliver excellence differently</p>
+                </div>
+                
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>The Corporate Giant Approach</th>
+                                <th>The Tablas Creek Advantage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Talent Retention</td><td>High turnover rates, disconnected transactional staff</td><td>Deeply loyal, highly motivated local career professionals</td></tr>
+                            <tr><td>Communication</td><td>Rigid, automated layers, and impersonal customer support</td><td>Direct, agile collaboration built on clear operational alignment</td></tr>
+                            <tr><td>Quality Control</td><td>Automated, volume-based output lacking individual scrutiny</td><td>Meticulous oversight driven by a community proud of its work</td></tr>
+                            <tr><td>Social Impact</td><td>Purely transactional operations</td><td>Directly fuels sustainable economic growth in a rising talent hub</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: WORKFLOW TIMELINE -->
+        <section>
+            <div class="container">
+                <div class="section-header">
+                    <h2>How We Work Together</h2>
+                    <p>A seamless 4-step partnership framework</p>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-step">
+                        <div class="timeline-number">01</div>
+                        <h3>DISCOVER</h3>
+                        <p>We map out your exact operational friction points and technical requirements.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-number">02</div>
+                        <h3>MATCH</h3>
+                        <p>We pair you with specialized Tablas professionals vetted for your industry.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-number">03</div>
+                        <h3>INTEGRATE</h3>
+                        <p>We sync your tools, communication channels, and secure data lines seamlessly.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="timeline-number">04</div>
+                        <h3>SCALE</h3>
+                        <p>We continuously manage performance metrics and deliver exceptional output.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: CTA BANNER -->
+        <section id="contact" class="cta-banner">
+            <div class="container">
+                <h2>Ready to build your elite offshore team?</h2>
+                <p>Stop compromising between cost and quality. Let us connect your business with the exceptional, dedicated talent of Tablas Creek.</p>
+                <a href="#" class="btn btn-outline-light" style="font-size: 1.125rem; padding: var(--space-4) var(--space-8);">Schedule a Discovery Call →</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <h3>Tablas Creek</h3>
+                <div class="footer-tagline">Business Process Outsourcing Services</div>
+            </div>
+            <div class="footer-copyright">
+                © 2024 Tablas Creek. All rights reserved.
+            </div>
         </div>
-      </div>
-      <div class="hero-quote">
-        <p>“We don’t just outsource — we elevate. Bringing the finest minds of Tablas to the global stage.”</p>
-        <div style="margin-top: 1rem; font-size: 0.7rem; text-transform: uppercase;">— Founding partner</div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- Story / Editorial -->
-  <section id="story" style="padding: 4rem 0;">
-    <div class="container story-grid fade-up">
-      <div class="story-text">
-        <h2>From Tablas Island to the global stage</h2>
-        <p>Tablas Island — the hidden gem of Romblon Province — shaped by cultural heritage, meticulous craftsmanship, and an exceptionally talented professional class. Historically, world-class local talent faced underemployment or leaving home behind.</p>
-        <p>We changed the paradigm. Tablas Creek Global bridges global operational demand with brilliant offshore talent. The dedication, technical precision, and creative brilliance that thrives here is exactly what enterprises seek.</p>
-        <p><strong>We elevate. We don't just staff projects; we build careers and fuel sustainable economic growth in a rising talent hub.</strong></p>
-      </div>
-      <div class="story-highlight">
-        <p style="font-family: var(--serif); font-style: italic;">“By bringing the finest minds of Tablas to the global marketplace, we empower businesses while keeping talent where it belongs — at home, building the future.”</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services -->
-  <section id="services" style="background: var(--stone); padding: 5rem 0;">
-    <div class="container">
-      <div class="fade-up"><h2>Core service pillars</h2><div class="section-subhead">Specialized. Rigorous. Human-centric.</div></div>
-      <div class="services-grid">
-        <div class="service-card fade-up"><div class="service-icon">📐</div><h3>Financial Infrastructure & Accounting</h3><p>University-trained finance & ops management.</p><ul><li>Bookkeeping & controller support</li><li>FP&A, audit readiness</li></ul></div>
-        <div class="service-card fade-up"><div class="service-icon">⚙️</div><h3>Engineering & Technical Services</h3><p>CAD drafting, 3D modeling, MEP/structural.</p><ul><li>Technical estimations</li><li>Quantity surveying</li></ul></div>
-        <div class="service-card fade-up"><div class="service-icon">🎞️</div><h3>Creative Multimedia & IT</h3><p>Photo/video editing, graphic design, web dev.</p><ul><li>Responsive design</li><li>End-to-end web architecture</li></ul></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Competitive Matrix -->
-  <section id="advantage" style="padding: 5rem 0;">
-    <div class="container">
-      <div class="fade-up"><h2>The Tablas Creek advantage</h2><div class="section-subhead">What makes us different is how we think.</div></div>
-      <div class="matrix-table fade-up" style="margin-top: 2rem;">
-        <table>
-          <thead><tr><th>Feature</th><th>Corporate giant approach</th><th>Tablas Creek edge</th></tr></thead>
-          <tbody>
-            <tr><td>Talent retention</td><td>High turnover, disconnected</td><td class="advantage-text">Deeply loyal career professionals</td></tr>
-            <tr><td>Communication</td><td>Rigid, automated layers</td><td class="advantage-text">Direct agile collaboration</td></tr>
-            <tr><td>Quality control</td><td>Volume-based automation</td><td class="advantage-text">Meticulous community-driven oversight</td></tr>
-            <tr><td>Social impact</td><td>Transactional</td><td class="advantage-text">Fuels sustainable economic growth in Tablas</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- Workflow -->
-  <section id="workflow" style="background: var(--stone); padding: 5rem 0;">
-    <div class="container">
-      <div class="fade-up"><h2>Onboarding workflow</h2><div class="section-subhead">From friction to fluid scale.</div></div>
-      <div class="steps-grid">
-        <div class="step-item fade-up"><div class="step-number">01</div><h3>Discover</h3><p>Map operational friction points + technical requirements.</p></div>
-        <div class="step-item fade-up"><div class="step-number">02</div><h3>Match</h3><p>Specialized Tablas professionals, vetted for your industry.</p></div>
-        <div class="step-item fade-up"><div class="step-number">03</div><h3>Integrate</h3><p>Sync tools, communication, secure data lines.</p></div>
-        <div class="step-item fade-up"><div class="step-number">04</div><h3>Scale</h3><p>Continuous performance management, exceptional output.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Banner -->
-  <section id="contact">
-    <div class="cta-banner fade-up">
-      <h2>Ready to build your elite offshore team?</h2>
-      <p style="max-width: 560px; margin: 1rem auto;">Stop compromising between cost and quality. Connect with the exceptional talent of Tablas Creek Global.</p>
-      <button class="btn btn-primary" id="ctaBtn" style="background: var(--rust);">Let’s talk strategy →</button>
-    </div>
-  </section>
-</main>
-
-<footer style="padding: 2rem; text-align: center; font-size: 0.7rem; border-top: 1px solid var(--stone-dark);">
-  <div class="container">© 2025 Tablas Creek Global — built on precision, creativity, and resilience.</div>
-</footer>
-
-<script>
-  // Intersection Observer for staggered fade-in
-  const fadeElements = document.querySelectorAll('.fade-up');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
-  fadeElements.forEach(el => observer.observe(el));
-
-  const scheduleAction = () => { alert("📅 Discovery scheduling — integrate Cal.com / Calendly here.\n\nCustom booking flow ready."); };
-  document.getElementById('discoveryBtn')?.addEventListener('click', scheduleAction);
-  document.getElementById('ctaBtn')?.addEventListener('click', scheduleAction);
-</script>
-
+    <!-- Initialize Feather Icons -->
+    <script>
+        feather.replace();
+        
+        // Smooth scroll for anchor links with offset for fixed navbar
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80; // Account for fixed navbar
+                    const elementPosition = target.offsetTop - offset;
+                    window.scrollTo({
+                        top: elementPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
