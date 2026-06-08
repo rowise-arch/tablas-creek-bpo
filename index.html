@@ -937,6 +937,68 @@
     to   { opacity: 1; transform: translateX(0); }
   }
 
+  /* ── HAMBURGER ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    z-index: 200;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--ink);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    background: var(--cream);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-menu .mobile-cta {
+    font-family: var(--font-body);
+    font-size: 0.82rem !important;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--cream) !important;
+    padding: 0.9rem 2.2rem;
+    border-radius: 2px;
+    margin-top: 1rem;
+    transition: background 0.25s !important;
+  }
+  .mobile-menu .mobile-cta:hover { background: var(--gold) !important; color: var(--white) !important; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
     nav { padding: 1.25rem 2rem; }
@@ -944,7 +1006,7 @@
 
     #hero { grid-template-columns: 1fr; min-height: auto; }
     .hero-left { padding: 6rem 2rem 3rem; }
-    .hero-right { min-height: 360px; display: none; }
+    .hero-right { display: none; }
 
     .story-inner { grid-template-columns: 1fr; gap: 3rem; }
     #story { padding: 5rem 2rem; }
@@ -963,9 +1025,53 @@
   }
 
   @media (max-width: 640px) {
+    /* Nav */
+    nav { padding: 1rem 1.25rem; }
     .nav-links { display: none; }
-    .hero-h1 { font-size: 2.8rem; }
-    .process-steps { grid-template-columns: 1fr; }
+    .nav-hamburger { display: flex; }
+    .nav-logo-name { font-size: 1.2rem; }
+    .nav-logo-sub { display: none; }
+
+    /* Hero */
+    #hero { padding-top: 70px; }
+    .hero-left { padding: 3rem 1.25rem 3rem; }
+    .hero-eyebrow { font-size: 0.62rem; }
+    .hero-h1 { font-size: 2.6rem; }
+    .hero-sub { font-size: 0.9rem; }
+    .hero-btns { flex-direction: column; gap: 0.75rem; }
+    .btn-primary, .btn-secondary { width: 100%; justify-content: center; padding: 0.9rem 1.25rem; font-size: 0.78rem; }
+
+    /* Story */
+    #story { padding: 4rem 1.25rem; }
+    .story-h2 { font-size: 2rem; }
+    .story-quote p { font-size: 1.2rem; }
+
+    /* Services */
+    #services { padding: 4rem 1.25rem; }
+    .services-h2 { font-size: 2rem; }
+    .service-card { padding: 1.75rem; }
+
+    /* Advantage */
+    #advantage { padding: 4rem 1.25rem; }
+    .advantage-h2 { font-size: 2rem; }
+    table { table-layout: auto; min-width: 560px; }
+    th, td { padding: 1rem 1rem; font-size: 0.8rem; }
+    th { font-size: 0.65rem; }
+
+    /* Process */
+    #process { padding: 4rem 1.25rem; }
+    .process-h2 { font-size: 2rem; }
+    .process-steps { grid-template-columns: 1fr; gap: 2rem; }
+    .process-step { padding: 0 0.5rem; }
+
+    /* CTA */
+    #cta { padding: 4rem 1.25rem; }
+    .cta-h2 { font-size: 2.4rem; }
+    .cta-btn { width: 100%; justify-content: center; padding: 1rem 1.5rem; font-size: 0.8rem; }
+    .cta-bg-text { font-size: 8rem; }
+
+    /* Footer */
+    footer { padding: 1.75rem 1.25rem; }
   }
 
   /* ── SCROLL REVEAL ── */
@@ -986,8 +1092,7 @@
 <!-- NAV -->
 <nav role="banner">
   <div class="nav-logo">
-    <span class="nav-logo-name">Tablas Creek</span>
-    <span class="nav-logo-sub">Business Process Outsourcing Services</span>
+    <img src="tablas-creek-logo.png" alt="Tablas Creek — Business Process Outsourcing Services" style="height:52px; width:auto; display:block;">
   </div>
   <ul class="nav-links" role="list">
     <li><a href="#story">Our Story</a></li>
@@ -996,7 +1101,19 @@
     <li><a href="#process">Process</a></li>
     <li><a href="#" onclick="openCalendly(event)" class="nav-cta">Schedule a Call</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <a href="#story" class="mobile-nav-link">Our Story</a>
+  <a href="#services" class="mobile-nav-link">Services</a>
+  <a href="#advantage" class="mobile-nav-link">Advantage</a>
+  <a href="#process" class="mobile-nav-link">Process</a>
+  <a href="#" onclick="openCalendly(event)" class="mobile-cta">Schedule a Call</a>
+</div>
 
 <!-- HERO -->
 <section id="hero" aria-label="Hero">
@@ -1249,8 +1366,7 @@
 <!-- FOOTER -->
 <footer role="contentinfo">
   <div class="footer-logo">
-    <span class="footer-logo-name">Tablas Creek</span>
-    <span class="footer-logo-sub">Business Process Outsourcing Services</span>
+    <img src="tablas-creek-logo.png" alt="Tablas Creek" style="height:44px; width:auto; display:block;">
   </div>
   <p class="footer-copy">&copy; 2025 Tablas Creek. All rights reserved.</p>
 </footer>
@@ -1263,11 +1379,13 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal, .process-step').forEach(el => observer.observe(el));
 
+  /* ── Calendly Modal ── */
   const modal = document.getElementById('calendly-modal');
   const iframe = document.getElementById('calendly-iframe');
 
   function openCalendly(e) {
     e.preventDefault();
+    closeMobileMenu();
     iframe.src = 'https://calendly.com/jeffreyrouisse/30min';
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -1281,8 +1399,31 @@
   }
 
   modal.addEventListener('click', (e) => { if (e.target === modal) closeCalendly(); });
-
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.style.display === 'flex') closeCalendly(); });
+
+  /* ── Mobile Menu ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  function closeMobileMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', () => closeMobileMenu());
+  });
+
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMobileMenu(); });
 </script>
 </body>
 </html>
