@@ -994,7 +994,7 @@
     <li><a href="#services">Services</a></li>
     <li><a href="#advantage">Advantage</a></li>
     <li><a href="#process">Process</a></li>
-    <li><a href="https://calendly.com/jeffreyrouisse/30min" target="_blank" rel="noopener" class="nav-cta">Schedule a Call</a></li>
+    <li><a href="#" onclick="openCalendly(event)" class="nav-cta">Schedule a Call</a></li>
   </ul>
 </nav>
 
@@ -1005,7 +1005,7 @@
     <h1 class="hero-h1">Global Enterprise<br>Solutions.<br><em>Handcrafted</em><br>Local Talent.</h1>
     <p class="hero-sub">Tablas Creek connects forward-thinking businesses with elite, offshore professionals in Accounting, Engineering, and Digital Infrastructure. Built on a foundation of precision, creativity, and resilience.</p>
     <div class="hero-btns">
-      <a href="https://calendly.com/jeffreyrouisse/30min" target="_blank" rel="noopener" class="btn-primary" role="button">
+      <a href="#" onclick="openCalendly(event)" class="btn-primary" role="button">
         Schedule a Discovery Call
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
@@ -1223,12 +1223,28 @@
     <div class="cta-section-label">Ready to Begin?</div>
     <h2 id="cta-title" class="cta-h2">Build Your <em>Elite</em><br>Offshore Team</h2>
     <p class="cta-text">Stop compromising between cost and quality. Let us connect your business with the exceptional, dedicated talent of Tablas Creek.</p>
-    <a href="https://calendly.com/jeffreyrouisse/30min" target="_blank" rel="noopener" class="cta-btn" role="button">
+    <a href="#" onclick="openCalendly(event)" class="cta-btn" role="button">
       Let's Talk Strategy
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 9h12M11 5l4 4-4 4"/></svg>
     </a>
   </div>
 </section>
+
+<!-- CALENDLY MODAL -->
+<div id="calendly-modal" role="dialog" aria-modal="true" aria-label="Schedule a Discovery Call" style="display:none; position:fixed; inset:0; z-index:1000; background:rgba(26,22,16,0.72); backdrop-filter:blur(6px); align-items:center; justify-content:center;">
+  <div style="position:relative; background:#FEFCF8; border-radius:6px; width:min(780px,95vw); height:min(700px,92vh); overflow:hidden; box-shadow:0 32px 80px rgba(0,0,0,0.35);">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; border-bottom:1px solid #D4C4A8; background:#FEFCF8;">
+      <div>
+        <p style="font-family:'Cormorant Garamond',Georgia,serif; font-size:1.2rem; font-weight:500; color:#1A1610; line-height:1;">Schedule a Discovery Call</p>
+        <p style="font-size:0.72rem; font-weight:300; letter-spacing:0.1em; color:#7A6950; margin-top:2px;">Tablas Creek — Business Process Outsourcing Services</p>
+      </div>
+      <button onclick="closeCalendly()" aria-label="Close scheduling modal" style="background:none; border:none; cursor:pointer; padding:6px; color:#7A6950; display:flex; align-items:center; justify-content:center; border-radius:4px; transition:background 0.2s;" onmouseover="this.style.background='#E8DCC8'" onmouseout="this.style.background='none'">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg>
+      </button>
+    </div>
+    <iframe id="calendly-iframe" src="" title="Schedule a Discovery Call with Tablas Creek" style="width:100%; height:calc(100% - 57px); border:none;" loading="lazy"></iframe>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer role="contentinfo">
@@ -1242,13 +1258,31 @@
 <script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
     });
   }, { threshold: 0.12 });
-
   document.querySelectorAll('.reveal, .process-step').forEach(el => observer.observe(el));
+
+  const modal = document.getElementById('calendly-modal');
+  const iframe = document.getElementById('calendly-iframe');
+
+  function openCalendly(e) {
+    e.preventDefault();
+    iframe.src = 'https://calendly.com/jeffreyrouisse/30min';
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    modal.querySelector('button').focus();
+  }
+
+  function closeCalendly() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    iframe.src = '';
+  }
+
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeCalendly(); });
+
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.style.display === 'flex') closeCalendly(); });
 </script>
 </body>
 </html>
