@@ -1,819 +1,1254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="Tablas Creek - Global Enterprise Solutions with handcrafted local talent in Accounting, Engineering, and Digital Infrastructure.">
-    <title>Tablas Creek | Global BPO Solutions</title>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet">
-    
-    <!-- Feather Icons -->
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    
-    <!-- Google Analytics - REPLACE G-XXXXXXXXXX with your actual GA4 ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
-    
-    <style>
-        /* ============================================ */
-        /* DESIGN TOKENS */
-        /* ============================================ */
-        :root {
-            --primary: #0F172A;
-            --primary-light: #1E293B;
-            --secondary: #059669;
-            --secondary-light: #10B981;
-            --accent: #F59E0B;
-            --background: #FFFFFF;
-            --background-alt: #F8FAFC;
-            --text-primary: #0F172A;
-            --text-secondary: #475569;
-            --text-muted: #94A3B8;
-            --border: #E2E8F0;
-            --error: #EF4444;
-            --success: #10B981;
-            
-            --space-1: 4px;
-            --space-2: 8px;
-            --space-3: 12px;
-            --space-4: 16px;
-            --space-5: 20px;
-            --space-6: 24px;
-            --space-7: 32px;
-            --space-8: 40px;
-            --space-9: 48px;
-            --space-10: 64px;
-            --space-11: 80px;
-            --space-12: 96px;
-            
-            --font-heading: 'Playfair Display', Georgia, serif;
-            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-            
-            --transition-fast: 150ms ease;
-            --transition-normal: 250ms ease;
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: var(--font-body);
-            color: var(--text-primary);
-            background-color: var(--background);
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-family: var(--font-heading);
-            font-weight: 700;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-        }
-        
-        button, .btn, a.btn, [role="button"], .nav-link {
-            min-height: 44px;
-            min-width: 44px;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-        
-        button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
-            outline: 2px solid var(--secondary);
-            outline-offset: 2px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--space-6);
-            width: 100%;
-        }
-        
-        section { padding: var(--space-10) 0; }
-        .section-alt { background-color: var(--background-alt); }
-        
-        /* Navigation */
-        .navbar {
-            padding: var(--space-4) 0;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            z-index: 100;
-        }
-        
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: var(--space-4);
-        }
-        
-        .logo h1 {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: var(--space-1);
-        }
-        
-        .logo-tagline {
-            font-size: 0.7rem;
-            letter-spacing: 0.5px;
-            color: var(--secondary);
-            text-transform: uppercase;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: var(--space-6);
-            list-style: none;
-        }
-        
-        .nav-link {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 500;
-            padding: var(--space-2) var(--space-2);
-        }
-        
-        .nav-link:hover { color: var(--secondary); }
-        
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--space-2);
-            padding: var(--space-3) var(--space-6);
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-1px);
-        }
-        
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--primary);
-            border: 1px solid var(--border);
-        }
-        
-        .btn-secondary:hover {
-            border-color: var(--secondary);
-            background-color: rgba(5, 150, 105, 0.05);
-        }
-        
-        .btn-outline-light {
-            background-color: transparent;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .btn-outline-light:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: white;
-        }
-        
-        /* Hero */
-        .hero { padding: var(--space-10) 0; }
-        .hero-grid { display: flex; gap: var(--space-8); align-items: center; }
-        .hero-content { flex: 1.2; }
-        .hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: var(--space-4); color: var(--primary); }
-        .hero-highlight { color: var(--secondary); }
-        .hero-subheadline { font-size: 1.125rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: var(--space-8); }
-        .hero-buttons { display: flex; flex-wrap: wrap; gap: var(--space-4); }
-        
-        .hero-visual {
-            flex: 1;
-            background: linear-gradient(135deg, var(--secondary-light) 0%, var(--secondary) 100%);
-            border-radius: 24px;
-            padding: var(--space-8);
-            text-align: center;
-            color: white;
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: var(--space-4);
-        }
-        
-        .hero-visual svg { width: 80px; height: 80px; stroke: white; }
-        
-        /* Story */
-        .story-container { max-width: 800px; margin: 0 auto; text-align: center; }
-        .section-label { color: var(--secondary); text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem; font-weight: 600; margin-bottom: var(--space-4); display: inline-block; }
-        .story h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); margin-bottom: var(--space-6); color: var(--primary); }
-        .story-text { font-size: 1rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: var(--space-6); text-align: left; }
-        
-        .blockquote {
-            background-color: white;
-            padding: var(--space-8);
-            border-radius: 16px;
-            margin: var(--space-6) 0;
-            border-left: 4px solid var(--accent);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .blockquote p { font-family: var(--font-heading); font-size: 1.25rem; line-height: 1.5; color: var(--primary); font-style: italic; text-align: center; }
-        
-        /* Service Cards */
-        .section-header { text-align: center; margin-bottom: var(--space-10); }
-        .section-header h2 { font-size: clamp(1.75rem, 4vw, 2.25rem); margin-bottom: var(--space-3); }
-        .section-header p { font-size: 1.125rem; color: var(--text-secondary); }
-        
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); }
-        
-        .card {
-            background-color: white;
-            border-radius: 16px;
-            padding: var(--space-6);
-            border: 1px solid var(--border);
-            transition: all var(--transition-normal);
-        }
-        
-        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-        
-        .card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-4); }
-        .card-icon svg { width: 24px; height: 24px; }
-        .card h3 { font-size: 1.25rem; margin-bottom: var(--space-2); color: var(--primary); }
-        .card p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin-bottom: var(--space-4); }
-        
-        .offerings-list { list-style: none; margin-top: var(--space-4); }
-        .offerings-list li { display: flex; align-items: center; gap: var(--space-2); font-size: 0.8125rem; color: var(--text-primary); padding: var(--space-1) 0; }
-        .offerings-list li svg { width: 14px; height: 14px; flex-shrink: 0; }
-        
-        /* Comparison Table */
-        .comparison-table { background-color: white; border-radius: 16px; overflow-x: auto; border: 1px solid var(--border); }
-        .comparison-table table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        .comparison-table th, .comparison-table td { padding: var(--space-4); text-align: left; border-bottom: 1px solid var(--border); }
-        .comparison-table th { background-color: var(--primary); color: white; font-weight: 600; }
-        .comparison-table th:last-child { background-color: var(--secondary); }
-        .comparison-table tr:last-child td { border-bottom: none; }
-        .comparison-table td:first-child { font-weight: 600; color: var(--primary); }
-        .comparison-table td:last-child { color: var(--secondary); font-weight: 500; }
-        
-        /* Timeline */
-        .timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-6); text-align: center; }
-        .timeline-number { width: 56px; height: 56px; background-color: var(--secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 700; margin: 0 auto var(--space-4); }
-        .timeline-step h3 { font-family: var(--font-body); font-weight: 700; font-size: 1rem; letter-spacing: 1px; margin-bottom: var(--space-2); color: var(--primary); }
-        .timeline-step p { font-size: 0.875rem; color: var(--text-secondary); }
-        
-        /* Contact Form */
-        .form-group { margin-bottom: var(--space-4); }
-        .form-group label { display: block; margin-bottom: var(--space-2); font-weight: 500; color: var(--text-primary); }
-        .form-group .required { color: var(--error); }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: var(--space-3);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: var(--font-body);
-            transition: border-color var(--transition-fast);
-        }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--secondary); }
-        .form-group input.error, .form-group select.error, .form-group textarea.error { border-color: var(--error); }
-        .error-message { color: var(--error); font-size: 0.75rem; margin-top: var(--space-1); display: block; }
-        
-        /* Modal Styles - Compact Size */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all var(--transition-normal);
-        }
-        
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .modal-container {
-            background-color: white;
-            border-radius: 24px;
-            width: 85%;
-            max-width: 750px;
-            height: 70vh;
-            max-height: 600px;
-            position: relative;
-            transform: scale(0.95);
-            transition: transform var(--transition-normal);
-            overflow: hidden;
-            box-shadow: var(--shadow-xl);
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .modal-overlay.active .modal-container {
-            transform: scale(1);
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: var(--space-3) var(--space-5);
-            border-bottom: 1px solid var(--border);
-            background-color: white;
-            flex-shrink: 0;
-        }
-        
-        .modal-header h3 {
-            font-family: var(--font-heading);
-            color: var(--primary);
-            font-size: 1.125rem;
-            margin: 0;
-        }
-        
-        .modal-close {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: var(--space-2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            transition: background-color var(--transition-fast);
-        }
-        
-        .modal-close:hover {
-            background-color: var(--background-alt);
-        }
-        
-        .modal-close svg {
-            width: 18px;
-            height: 18px;
-            stroke: var(--text-secondary);
-        }
-        
-        .modal-body {
-            padding: 0;
-            overflow: auto;
-            flex: 1;
-            min-height: 0;
-        }
-        
-        .calendly-embed {
-            width: 100%;
-            height: 100%;
-            min-height: 500px;
-        }
-        
-        /* Override Calendly's default inline widget styles */
-        .calendly-inline-widget,
-        .calendly-inline-widget iframe,
-        .calendly-embed iframe {
-            width: 100% !important;
-            height: 100% !important;
-            min-height: 500px !important;
-        }
-        
-        /* CTA Banner */
-        .cta-banner { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); text-align: center; padding: var(--space-12) var(--space-6); }
-        .cta-banner h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); color: white; margin-bottom: var(--space-4); }
-        .cta-banner p { font-size: 1.125rem; color: rgba(255, 255, 255, 0.8); max-width: 600px; margin: 0 auto var(--space-8); }
-        
-        /* Footer */
-        .footer { background-color: var(--primary); color: white; padding: var(--space-8) 0; }
-        .footer .container { text-align: center; }
-        .footer-logo h3 { font-size: 1.5rem; margin-bottom: var(--space-1); }
-        .footer-tagline { font-size: 0.7rem; color: var(--border); margin-bottom: var(--space-6); }
-        .footer-copyright { font-size: 0.75rem; color: rgba(255, 255, 255, 0.5); margin-top: var(--space-6); }
-        
-        /* Prevent body scroll when modal is open */
-        body.modal-open {
-            overflow: hidden;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-grid { flex-direction: column; }
-            .navbar .container { flex-direction: column; text-align: center; }
-            .hero-buttons { justify-content: center; }
-            .hero h1, .hero-subheadline { text-align: center; }
-            section { padding: var(--space-8) 0; }
-            .blockquote p { font-size: 1rem; }
-            
-            .modal-container {
-                width: 92%;
-                max-width: none;
-                height: 75vh;
-                max-height: 550px;
-            }
-            
-            .modal-header h3 {
-                font-size: 1rem;
-            }
-            
-            .calendly-inline-widget,
-            .calendly-inline-widget iframe,
-            .calendly-embed iframe {
-                min-height: 480px !important;
-            }
-        }
-        
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tablas Creek — Business Process Outsourcing Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F3ED;
+    --ink: #1A1610;
+    --ink-soft: #3D352A;
+    --warm-mid: #7A6950;
+    --gold: #B8934A;
+    --gold-light: #D4A85A;
+    --rust: #8B4B2A;
+    --sage: #4A6B5A;
+    --sand: #E8DCC8;
+    --sand-dark: #D4C4A8;
+    --white: #FEFCF8;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 16px;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: rgba(247, 243, 237, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sand-dark);
+    transition: padding 0.3s ease;
+  }
+
+  .nav-logo {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .nav-logo-name {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .nav-logo-sub {
+    font-size: 0.62rem;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.82rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--ink) !important;
+    color: var(--cream) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2px;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    transition: background 0.25s, color 0.25s !important;
+  }
+
+  .nav-cta:hover { background: var(--gold) !important; color: var(--white) !important; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 3rem 6rem 4rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 5vw, 5rem);
+    font-weight: 500;
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 1.75rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+
+  .hero-h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.55s forwards;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.7s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--ink);
+    color: var(--white);
+    padding: 0.85rem 1.8rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .btn-primary svg { transition: transform 0.25s; }
+  .btn-primary:hover svg { transform: translateX(3px); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--ink);
+    padding: 0.85rem 1.8rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid var(--sand-dark);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--sand);
+    opacity: 0;
+    animation: fadeIn 1.2s ease 0.3s forwards;
+  }
+
+  .hero-visual {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, var(--sand-dark) 39px, var(--sand-dark) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, var(--sand-dark) 39px, var(--sand-dark) 40px);
+    opacity: 0.4;
+  }
+
+  .hero-island-card {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 3rem;
+  }
+
+  .hero-island-glyph {
+    font-family: var(--font-display);
+    font-size: 9rem;
+    font-weight: 400;
+    color: var(--gold);
+    line-height: 1;
+    opacity: 0.25;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+    z-index: 3;
+  }
+
+  .hero-stat-item {
+    background: var(--white);
+    border: 1px solid var(--sand-dark);
+    border-radius: 4px;
+    padding: 1.25rem 1.75rem;
+    text-align: left;
+    transform: translateX(20px);
+    opacity: 0;
+    animation: slideLeft 0.7s ease forwards;
+  }
+
+  .hero-stat-item:nth-child(1) { animation-delay: 0.9s; }
+  .hero-stat-item:nth-child(2) { animation-delay: 1.05s; }
+  .hero-stat-item:nth-child(3) { animation-delay: 1.2s; }
+
+  .hero-stat-number {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+
+  .hero-stat-label {
+    font-size: 0.78rem;
+    color: var(--warm-mid);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  /* ── SECTION BASE ── */
+  section { position: relative; }
+
+  .section-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  /* ── STORY SECTION ── */
+  #story {
+    background: var(--ink);
+    padding: 8rem 4rem;
+    overflow: hidden;
+  }
+
+  .story-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .story-left .section-label { color: var(--gold); }
+  .story-left .section-label::before { background: var(--gold); }
+
+  .story-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 4vw, 3.5rem);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 2rem;
+  }
+
+  .story-h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .story-text {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(247, 243, 237, 0.65);
+    margin-bottom: 1.25rem;
+  }
+
+  .story-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .story-quote {
+    border-left: 3px solid var(--gold);
+    padding: 1.5rem 2rem;
+    background: rgba(184, 147, 74, 0.08);
+    border-radius: 0 4px 4px 0;
+    margin: 1.5rem 0;
+  }
+
+  .story-quote p {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  .story-text-right {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(247, 243, 237, 0.65);
+    margin-bottom: 1.25rem;
+  }
+
+  .story-closing {
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: rgba(247, 243, 237, 0.8);
+    border-top: 1px solid rgba(184, 147, 74, 0.3);
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ── SERVICES ── */
+  #services {
+    padding: 8rem 4rem;
+    background: var(--cream);
+  }
+
+  .services-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .services-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 4rem;
+  }
+
+  .services-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .services-desc {
+    font-size: 0.95rem;
+    color: var(--warm-mid);
+    font-weight: 300;
+    line-height: 1.75;
+    max-width: 360px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--sand-dark);
+    border: 1.5px solid var(--sand-dark);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--white);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: background 0.3s ease;
+    cursor: default;
+  }
+
+  .service-card:hover { background: var(--ink); }
+
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    border: 1.5px solid var(--sand-dark);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .service-card:hover .service-icon {
+    border-color: var(--gold);
+    background: rgba(184, 147, 74, 0.1);
+  }
+
+  .service-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--warm-mid);
+    transition: stroke 0.3s;
+  }
+
+  .service-card:hover .service-icon svg { stroke: var(--gold); }
+
+  .service-pillar {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .service-name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+    transition: color 0.3s;
+  }
+
+  .service-card:hover .service-name { color: var(--cream); }
+
+  .service-desc {
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--warm-mid);
+    transition: color 0.3s;
+  }
+
+  .service-card:hover .service-desc { color: rgba(247, 243, 237, 0.6); }
+
+  .service-offerings {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sand);
+    transition: border-color 0.3s;
+  }
+
+  .service-card:hover .service-offerings { border-color: rgba(184, 147, 74, 0.2); }
+
+  .service-offerings li {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--warm-mid);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s;
+  }
+
+  .service-card:hover .service-offerings li { color: rgba(247, 243, 237, 0.55); }
+
+  .service-offerings li::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── ADVANTAGE ── */
+  #advantage {
+    padding: 8rem 4rem;
+    background: var(--sand);
+  }
+
+  .advantage-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .advantage-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .advantage-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-top: 0.5rem;
+  }
+
+  .advantage-table-wrap {
+    overflow-x: auto;
+    border-radius: 4px;
+    border: 1.5px solid var(--sand-dark);
+    background: var(--white);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  th {
+    padding: 1.25rem 2rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: left;
+    border-bottom: 1.5px solid var(--sand-dark);
+  }
+
+  th:first-child { color: var(--warm-mid); width: 22%; }
+  th:nth-child(2) { color: var(--warm-mid); background: rgba(247, 243, 237, 0.5); }
+  th:nth-child(3) { background: var(--ink); color: var(--gold); }
+
+  td {
+    padding: 1.25rem 2rem;
+    font-size: 0.875rem;
+    font-weight: 300;
+    vertical-align: top;
+    border-bottom: 1px solid var(--sand);
+    line-height: 1.6;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  td:first-child {
+    font-weight: 500;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+
+  td:nth-child(2) {
+    color: var(--warm-mid);
+    background: rgba(247, 243, 237, 0.4);
+  }
+
+  td:nth-child(3) {
+    background: var(--ink);
+    color: rgba(247, 243, 237, 0.8);
+  }
+
+  td:nth-child(3) strong {
+    color: var(--cream);
+    font-weight: 500;
+  }
+
+  .td-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .td-check::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(74, 107, 90, 0.15);
+    border: 1.5px solid var(--sage);
+    flex-shrink: 0;
+    display: inline-block;
+  }
+
+  /* ── PROCESS ── */
+  #process {
+    padding: 8rem 4rem;
+    background: var(--cream);
+  }
+
+  .process-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .process-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .process-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    font-weight: 500;
+    color: var(--ink);
+    margin-top: 0.5rem;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: relative;
+    gap: 0;
+  }
+
+  .process-connector {
+    position: absolute;
+    top: 2.2rem;
+    left: calc(12.5% + 1rem);
+    right: calc(12.5% + 1rem);
+    height: 1px;
+    background: var(--sand-dark);
+    z-index: 0;
+  }
+
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .process-step.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .process-step:nth-child(2) { transition-delay: 0.15s; }
+  .process-step:nth-child(3) { transition-delay: 0.3s; }
+  .process-step:nth-child(4) { transition-delay: 0.45s; }
+
+  .step-number {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: 1.5px solid var(--sand-dark);
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s;
+  }
+
+  .process-step:hover .step-number {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--white);
+  }
+
+  .step-tag {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+
+  .step-desc {
+    font-size: 0.84rem;
+    font-weight: 300;
+    color: var(--warm-mid);
+    line-height: 1.7;
+  }
+
+  /* ── CTA ── */
+  #cta {
+    padding: 8rem 4rem;
+    background: var(--ink);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: 18rem;
+    font-weight: 500;
+    color: rgba(184, 147, 74, 0.04);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .cta-section-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 500;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-h2 em { color: var(--gold); font-style: italic; }
+
+  .cta-text {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(247, 243, 237, 0.6);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--gold);
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid var(--gold);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .cta-btn:hover {
+    background: transparent;
+    color: var(--gold);
+  }
+
+  .cta-btn svg { transition: transform 0.25s; }
+  .cta-btn:hover svg { transform: translateX(4px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(184, 147, 74, 0.15);
+    padding: 2.5rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .footer-logo-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+  }
+
+  .footer-logo-sub {
+    font-size: 0.6rem;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: rgba(247, 243, 237, 0.35);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes slideLeft {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 1.25rem 2rem; }
+    .nav-links { gap: 1.5rem; }
+
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 6rem 2rem 3rem; }
+    .hero-right { min-height: 360px; display: none; }
+
+    .story-inner { grid-template-columns: 1fr; gap: 3rem; }
+    #story { padding: 5rem 2rem; }
+
+    .services-header { grid-template-columns: 1fr; gap: 1rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    #services { padding: 5rem 2rem; }
+
+    #advantage { padding: 5rem 2rem; }
+    #process { padding: 5rem 2rem; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .process-connector { display: none; }
+
+    #cta { padding: 5rem 2rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hero-h1 { font-size: 2.8rem; }
+    .process-steps { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <h1>Tablas Creek</h1>
-                <div class="logo-tagline">Business Process Outsourcing Services</div>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#services" class="nav-link">Services</a></li>
-                <li><a href="#story" class="nav-link">Story</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="#" class="nav-link" id="navScheduleBtn">Schedule</a></li>
-            </ul>
-        </div>
-    </nav>
+<!-- NAV -->
+<nav role="banner">
+  <div class="nav-logo">
+    <span class="nav-logo-name">Tablas Creek</span>
+    <span class="nav-logo-sub">Business Process Outsourcing Services</span>
+  </div>
+  <ul class="nav-links" role="list">
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#advantage">Advantage</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="https://calendly.com/jeffreyrouisse/30min" target="_blank" rel="noopener" class="nav-cta">Schedule a Call</a></li>
+  </ul>
+</nav>
 
-    <main>
-        <!-- HERO -->
-        <section class="hero">
-            <div class="container hero-grid">
-                <div class="hero-content">
-                    <h1>Global Enterprise Solutions.<br><span class="hero-highlight">Handcrafted Local Talent.</span></h1>
-                    <p class="hero-subheadline">Tablas Creek connects forward-thinking businesses with elite, offshore professionals in Accounting, Engineering, and Digital Infrastructure. Built on a foundation of precision, creativity, and resilience.</p>
-                    <div class="hero-buttons">
-                        <a href="#" class="btn btn-primary" id="heroScheduleBtn">Schedule a Discovery Call →</a>
-                        <a href="#services" class="btn btn-secondary">View Our Services</a>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                    </svg>
-                    <p>Global talent, local roots</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- STORY -->
-        <section id="story" class="story section-alt">
-            <div class="container story-container">
-                <span class="section-label">Our Story</span>
-                <h2>The Heart of Tablas: <span style="color: var(--secondary);">Talents Born to Rise</span></h2>
-                <div class="story-text"><p>Tablas Island is a place of breathtaking beauty, but its greatest treasure has always been its people. Walk through our communities and you will find brilliant minds, meticulous engineers, masterfully creative artists, and world-class financial professionals. They possess a rare blend of exceptional skill, deep dedication, and a natural instinct for perfection.</p></div>
-                <div class="story-text"><p>Yet, for decades, a quiet and painful sacrifice has been demanded of our island's finest. Because of a deep lack of local opportunities, some of our most talented professionals are forced to settle for roles that vastly underpay them. Others face an even harder choice: packing a suitcase, leaving the families they love behind, and migrating to crowded cities just to find a career.</p></div>
-                <div class="story-text"><p>We believed it was time to rewrite that story.</p></div>
-                <div class="blockquote"><p>"We shouldn't have to send our people away to find the world. It's time to bring the world to them."</p></div>
-                <div class="story-text"><p>We founded this company to shatter the geographic boundaries holding our community back. By building a direct bridge between global operational demands and the untapped brilliance of Tablas, we are proving that world-class excellence doesn't just come from high-rise offices in major metropolises. It is thriving right here, fueled by the sweat of our brow and a shared passion to excel.</p></div>
-                <div class="story-text"><p>When businesses partner with Tablas Creek, they aren't just hiring a vendor. They are choosing a team of fiercely dedicated, profoundly grateful professionals who finally have the global stage they deserve—right from the place they call home.</p></div>
-            </div>
-        </section>
-
-        <!-- SERVICES -->
-        <section id="services">
-            <div class="container">
-                <div class="section-header"><h2>Core Service Pillars</h2><p>Three divisions of excellence, one standard of quality</p></div>
-                <div class="cards-grid">
-                    <div class="card"><div class="card-icon" style="background-color: rgba(5, 150, 105, 0.1);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M21 12v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><h3>Financial Infrastructure & Accounting</h3><p>Transform your numbers into strategic growth. Our university-trained finance professionals deliver flawless back-office compliance.</p><ul class="offerings-list"><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> End-to-end bookkeeping</li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Virtual controller support</li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Financial planning & analysis</li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Audit readiness</li></ul></div>
-                    
-                    <div class="card"><div class="card-icon" style="background-color: rgba(15, 23, 42, 0.1);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><h3>Engineering & Technical Services</h3><p>Accelerate your project timelines without compromising on technical precision.</p><ul class="offerings-list"><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> CAD drafting</li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 3D modeling (MEP/Structural)</li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Technical estimations</li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Quantity surveying</li></ul></div>
-                    
-                    <div class="card"><div class="card-icon" style="background-color: rgba(245, 158, 11, 0.1);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M4 4h16v16H4z"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="8" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="16"/><line x1="8" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="16" y2="12"/></svg></div><h3>Creative Multimedia & IT Services</h3><p>Elevate your digital presence through striking visual storytelling and robust digital architecture.</p><ul class="offerings-list"><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Professional photo/video editing</li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Graphic design</li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Responsive web design</li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> End-to-end web development</li></ul></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- COMPARISON TABLE -->
-        <section class="section-alt">
-            <div class="container">
-                <div class="section-header"><h2>The Tablas Creek Advantage</h2><p>Compare how we deliver excellence differently</p></div>
-                <div class="comparison-table">
-                    <table>
-                        <thead><tr><th>Feature</th><th>The Corporate Giant Approach</th><th>The Tablas Creek Advantage</th></tr></thead>
-                        <tbody>
-                            <tr><td>Talent Retention</td<td>High turnover rates, disconnected transactional staff</td<td>Deeply loyal, highly motivated local career professionals</td</tr>
-                            <tr><td>Communication</td<td>Rigid, automated layers, impersonal support</td<td>Direct, agile collaboration built on clear operational alignment</td</tr>
-                            <tr><td>Quality Control</td<td>Automated, volume-based output lacking scrutiny</td<td>Meticulous oversight driven by a community proud of its work</td</tr>
-                            <tr><td>Social Impact</td<td>Purely transactional operations</td<td>Directly fuels sustainable economic growth in a rising talent hub</td</tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- WORKFLOW -->
-        <section>
-            <div class="container">
-                <div class="section-header"><h2>How We Work Together</h2><p>A seamless 4-step partnership framework</p></div>
-                <div class="timeline">
-                    <div class="timeline-step"><div class="timeline-number">01</div><h3>DISCOVER</h3><p>We map out your exact operational friction points and technical requirements.</p></div>
-                    <div class="timeline-step"><div class="timeline-number">02</div><h3>MATCH</h3><p>We pair you with specialized Tablas professionals vetted for your industry.</p></div>
-                    <div class="timeline-step"><div class="timeline-number">03</div><h3>INTEGRATE</h3><p>We sync your tools, communication channels, and secure data lines seamlessly.</p></div>
-                    <div class="timeline-step"><div class="timeline-number">04</div><h3>SCALE</h3><p>We continuously manage performance metrics and deliver exceptional output.</p></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CONTACT FORM -->
-        <section id="contact" class="section-alt">
-            <div class="container">
-                <div class="section-header"><h2>Get in Touch</h2><p>Fill out the form below, and we'll respond within 24 hours</p></div>
-                <div style="max-width: 600px; margin: 0 auto;">
-                    <div id="formStatus"></div>
-                    <form id="contactForm" action="https://formsubmit.co/jeffreyrouisse@gmail.com" method="POST">
-                        <input type="hidden" name="_subject" value="New Tablas Creek Website Inquiry">
-                        <input type="hidden" name="_captcha" value="true">
-                        <input type="hidden" name="_next" value="https://tablas-creek.vercel.app/thank-you.html">
-                        <input type="hidden" name="_template" value="table">
-                        <div class="form-group"><label for="name">Full Name <span class="required">*</span></label><input type="text" id="name" name="name" required><span class="error-message" id="nameError"></span></div>
-                        <div class="form-group"><label for="email">Email Address <span class="required">*</span></label><input type="email" id="email" name="email" required><span class="error-message" id="emailError"></span></div>
-                        <div class="form-group"><label for="phone">Phone Number</label><input type="tel" id="phone" name="phone"></div>
-                        <div class="form-group"><label for="service">Service Interested In <span class="required">*</span></label><select id="service" name="service" required><option value="">Select a service</option><option value="accounting">Financial Infrastructure & Accounting</option><option value="engineering">Engineering & Technical Services</option><option value="creative">Creative Multimedia & IT Services</option><option value="general">General Inquiry</option></select><span class="error-message" id="serviceError"></span></div>
-                        <div class="form-group"><label for="message">Message <span class="required">*</span></label><textarea id="message" name="message" rows="5" required></textarea><span class="error-message" id="messageError"></span></div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message →</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA BANNER -->
-        <section class="cta-banner">
-            <div class="container">
-                <h2>Ready to build your elite offshore team?</h2>
-                <p>Stop compromising between cost and quality. Let us connect your business with the exceptional, dedicated talent of Tablas Creek.</p>
-                <a href="#" class="btn btn-outline-light" id="ctaScheduleBtn" style="font-size: 1.125rem; padding: var(--space-4) var(--space-8);">Schedule a Discovery Call →</a>
-            </div>
-        </section>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-logo">
-                <h3>Tablas Creek</h3>
-                <div class="footer-tagline">Business Process Outsourcing Services</div>
-            </div>
-            <div class="footer-copyright">
-                © 2025 Tablas Creek. All rights reserved.
-            </div>
-        </div>
-    </footer>
-
-    <!-- CALENDLY MODAL POPUP -->
-    <div id="calendlyModal" class="modal-overlay">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3>Schedule Your Discovery Call</h3>
-                <button class="modal-close" id="closeModalBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="calendly-embed" data-calendly-url="https://calendly.com/jeffreyrouisse/30min"></div>
-            </div>
-        </div>
+<!-- HERO -->
+<section id="hero" aria-label="Hero">
+  <div class="hero-left">
+    <span class="hero-eyebrow">Offshore Excellence, Local Heart</span>
+    <h1 class="hero-h1">Global Enterprise<br>Solutions.<br><em>Handcrafted</em><br>Local Talent.</h1>
+    <p class="hero-sub">Tablas Creek connects forward-thinking businesses with elite, offshore professionals in Accounting, Engineering, and Digital Infrastructure. Built on a foundation of precision, creativity, and resilience.</p>
+    <div class="hero-btns">
+      <a href="https://calendly.com/jeffreyrouisse/30min" target="_blank" rel="noopener" class="btn-primary" role="button">
+        Schedule a Discovery Call
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a href="#services" class="btn-secondary" role="button">
+        View Our Services
+      </a>
     </div>
+  </div>
+  <div class="hero-right" aria-hidden="true">
+    <div class="hero-visual">
+      <div class="hero-pattern"></div>
+      <div class="hero-island-glyph">T</div>
+      <div class="hero-stats">
+        <div class="hero-stat-item">
+          <span class="hero-stat-number">3</span>
+          <span class="hero-stat-label">Core Service Pillars</span>
+        </div>
+        <div class="hero-stat-item">
+          <span class="hero-stat-number">100%</span>
+          <span class="hero-stat-label">Island-Based Talent</span>
+        </div>
+        <div class="hero-stat-item">
+          <span class="hero-stat-number">01→04</span>
+          <span class="hero-stat-label">Streamlined Onboarding Steps</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Calendly Widget Script -->
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    
-    <!-- Main Script -->
-    <script>
-        // Initialize Feather Icons
-        feather.replace();
-        
-        // Get modal elements
-        const modal = document.getElementById('calendlyModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        let calendlyLoaded = false;
-        
-        // Function to load Calendly
-        function loadCalendly() {
-            if (!calendlyLoaded && typeof Calendly !== 'undefined') {
-                const calendlyDiv = document.querySelector('.calendly-embed');
-                if (calendlyDiv && !calendlyDiv.hasAttribute('data-calendly-loaded')) {
-                    const url = calendlyDiv.getAttribute('data-calendly-url');
-                    Calendly.initInlineWidget({
-                        url: url,
-                        parentElement: calendlyDiv,
-                        prefill: {},
-                        utm: {}
-                    });
-                    calendlyDiv.setAttribute('data-calendly-loaded', 'true');
-                    calendlyLoaded = true;
-                }
-            }
-        }
-        
-        // Function to open modal
-        function openModal() {
-            modal.classList.add('active');
-            document.body.classList.add('modal-open');
-            
-            // Load Calendly when modal opens
-            setTimeout(loadCalendly, 100);
-            
-            // Track modal open in Google Analytics
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'modal_open', {
-                    'event_category': 'engagement',
-                    'event_label': 'calendly_modal_opened'
-                });
-            }
-        }
-        
-        // Function to close modal
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.classList.remove('modal-open');
-            
-            // Track modal close in Google Analytics
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'modal_close', {
-                    'event_category': 'engagement',
-                    'event_label': 'calendly_modal_closed'
-                });
-            }
-        }
-        
-        // Close modal when clicking outside
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-        
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
-            }
-        });
-        
-        // Open modal when clicking any "Schedule a Discovery Call" button
-        const heroScheduleBtn = document.getElementById('heroScheduleBtn');
-        const ctaScheduleBtn = document.getElementById('ctaScheduleBtn');
-        const navScheduleBtn = document.getElementById('navScheduleBtn');
-        
-        if (heroScheduleBtn) {
-            heroScheduleBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                openModal();
-            });
-        }
-        
-        if (ctaScheduleBtn) {
-            ctaScheduleBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                openModal();
-            });
-        }
-        
-        if (navScheduleBtn) {
-            navScheduleBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                openModal();
-            });
-        }
-        
-        // Close modal button
-        if (closeModalBtn) {
-            closeModalBtn.addEventListener('click', closeModal);
-        }
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href && href !== '#') {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        e.preventDefault();
-                        const offset = 80;
-                        const elementPosition = target.offsetTop - offset;
-                        window.scrollTo({
-                            top: elementPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-            });
-        });
-        
-        // Form validation
-        const contactForm = document.getElementById('contactForm');
-        
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                let isValid = true;
-                
-                document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-                document.querySelectorAll('.form-group input, .form-group select, .form-group textarea').forEach(el => {
-                    el.classList.remove('error');
-                });
-                
-                const name = document.getElementById('name');
-                if (!name.value.trim()) {
-                    document.getElementById('nameError').textContent = 'Please enter your full name';
-                    name.classList.add('error');
-                    isValid = false;
-                }
-                
-                const email = document.getElementById('email');
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!email.value.trim() || !emailRegex.test(email.value)) {
-                    document.getElementById('emailError').textContent = 'Please enter a valid email address';
-                    email.classList.add('error');
-                    isValid = false;
-                }
-                
-                const service = document.getElementById('service');
-                if (!service.value) {
-                    document.getElementById('serviceError').textContent = 'Please select a service';
-                    service.classList.add('error');
-                    isValid = false;
-                }
-                
-                const message = document.getElementById('message');
-                if (!message.value.trim()) {
-                    document.getElementById('messageError').textContent = 'Please enter your message';
-                    message.classList.add('error');
-                    isValid = false;
-                }
-                
-                if (!isValid) {
-                    e.preventDefault();
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'form_error', {
-                            'event_category': 'engagement',
-                            'event_label': 'contact_form_validation_error'
-                        });
-                    }
-                } else if (typeof gtag !== 'undefined') {
-                    gtag('event', 'form_submit', {
-                        'event_category': 'engagement',
-                        'event_label': 'contact_form_submit'
-                    });
-                }
-            });
-        }
-        
-        // Track service card clicks
-        document.querySelectorAll('.card').forEach((card) => {
-            card.addEventListener('click', function() {
-                const title = this.querySelector('h3')?.textContent || 'Unknown';
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'service_card_click', {
-                        'event_category': 'engagement',
-                        'event_label': title
-                    });
-                }
-            });
-        });
-    </script>
+<!-- STORY -->
+<section id="story" aria-labelledby="story-title">
+  <div class="story-inner">
+    <div class="story-left reveal">
+      <span class="section-label">Our Origin</span>
+      <h2 id="story-title" class="story-h2">The Heart of Tablas:<br><em>Talents Born to Rise</em></h2>
+      <p class="story-text">Tablas Island is a place of breathtaking beauty, but its greatest treasure has always been its people. Walk through our communities and you will find brilliant minds, meticulous engineers, masterfully creative artists, and world-class financial professionals.</p>
+      <p class="story-text">They possess a rare blend of exceptional skill, deep dedication, and a natural instinct for perfection.</p>
+      <p class="story-text">Yet, for decades, a quiet and painful sacrifice has been demanded of our island's finest. Because of a deep lack of local opportunities, some of our most talented professionals are forced to settle for roles that vastly underpay them. Others face an even harder choice: packing a suitcase, leaving the families they love behind, and migrating to crowded cities just to find a career.</p>
+    </div>
+    <div class="story-right reveal" style="transition-delay: 0.2s;">
+      <div class="story-quote">
+        <p>"We shouldn't have to send our people away to find the world. It's time to bring the world to them."</p>
+      </div>
+      <p class="story-text-right">We founded this company to shatter the geographic boundaries holding our community back. By building a direct bridge between global operational demands and the untapped brilliance of Tablas, we are proving that world-class excellence doesn't just come from high-rise offices in major metropolises.</p>
+      <p class="story-closing">When businesses partner with Tablas Creek, they aren't just hiring a vendor. They are choosing a team of fiercely dedicated, profoundly grateful professionals who finally have the global stage they deserve — right from the place they call home.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" aria-labelledby="services-title">
+  <div class="services-inner">
+    <div class="services-header reveal">
+      <div>
+        <span class="section-label">What We Deliver</span>
+        <h2 id="services-title" class="services-h2">Core Service<br>Pillars</h2>
+      </div>
+      <p class="services-desc">Three disciplines. One commitment to excellence. Each pillar staffed by university-trained specialists from Tablas Island, ready to integrate seamlessly with your operations.</p>
+    </div>
+    <div class="services-grid reveal" style="transition-delay: 0.15s;">
+
+      <!-- Pillar 1 -->
+      <article class="service-card" aria-label="Financial Infrastructure & Accounting">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <span class="service-pillar">Pillar 01</span>
+        <h3 class="service-name">Financial Infrastructure & Accounting</h3>
+        <p class="service-desc">Transform your numbers into strategic growth. Our university-trained finance professionals deliver flawless back-office compliance.</p>
+        <ul class="service-offerings" aria-label="Key offerings">
+          <li>End-to-end bookkeeping</li>
+          <li>Virtual controller support</li>
+          <li>Financial planning & analysis (FP&A)</li>
+          <li>Audit readiness</li>
+        </ul>
+      </article>
+
+      <!-- Pillar 2 -->
+      <article class="service-card" aria-label="Engineering & Technical Services">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+            <line x1="12" y1="2" x2="12" y2="6"/>
+            <line x1="12" y1="18" x2="12" y2="22"/>
+          </svg>
+        </div>
+        <span class="service-pillar">Pillar 02</span>
+        <h3 class="service-name">Engineering & Technical Services</h3>
+        <p class="service-desc">Accelerate your project timelines without compromising on technical precision. Our engineering division handles complex documentation with rigorous accuracy.</p>
+        <ul class="service-offerings" aria-label="Key offerings">
+          <li>CAD drafting</li>
+          <li>3D modeling (MEP / Structural)</li>
+          <li>Technical estimations</li>
+          <li>Quantity surveying</li>
+        </ul>
+      </article>
+
+      <!-- Pillar 3 -->
+      <article class="service-card" aria-label="Creative Multimedia & IT Services">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <span class="service-pillar">Pillar 03</span>
+        <h3 class="service-name">Creative Multimedia & IT Services</h3>
+        <p class="service-desc">Elevate your digital presence and optimize your user experience through striking visual storytelling and robust digital architecture.</p>
+        <ul class="service-offerings" aria-label="Key offerings">
+          <li>Professional photo / video editing</li>
+          <li>Graphic design</li>
+          <li>Responsive web design</li>
+          <li>End-to-end web development</li>
+        </ul>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ADVANTAGE -->
+<section id="advantage" aria-labelledby="advantage-title">
+  <div class="advantage-inner">
+    <div class="advantage-header reveal">
+      <span class="section-label">The Difference</span>
+      <h2 id="advantage-title" class="advantage-h2">The Tablas Creek Advantage</h2>
+    </div>
+    <div class="advantage-table-wrap reveal" style="transition-delay: 0.15s;">
+      <table aria-label="Comparison table: standard corporate approach versus Tablas Creek">
+        <thead>
+          <tr>
+            <th scope="col">Feature</th>
+            <th scope="col">The Corporate Giant Approach</th>
+            <th scope="col">The Tablas Creek Advantage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Talent Retention</td>
+            <td>High turnover rates, disconnected transactional staff.</td>
+            <td><span class="td-check"><strong>Deeply loyal, highly motivated</strong> local career professionals.</span></td>
+          </tr>
+          <tr>
+            <td>Communication</td>
+            <td>Rigid, automated layers and impersonal customer support.</td>
+            <td><span class="td-check"><strong>Direct, agile collaboration</strong> built on clear operational alignment.</span></td>
+          </tr>
+          <tr>
+            <td>Quality Control</td>
+            <td>Automated, volume-based output lacking individual scrutiny.</td>
+            <td><span class="td-check"><strong>Meticulous oversight</strong> driven by a community proud of its work.</span></td>
+          </tr>
+          <tr>
+            <td>Social Impact</td>
+            <td>Purely transactional operations.</td>
+            <td><span class="td-check"><strong>Directly fuels</strong> sustainable economic growth in a rising talent hub.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" aria-labelledby="process-title">
+  <div class="process-inner">
+    <div class="process-header reveal">
+      <span class="section-label">How It Works</span>
+      <h2 id="process-title" class="process-h2">From Discovery to Scale</h2>
+    </div>
+    <div class="process-steps" role="list">
+      <div class="process-connector" aria-hidden="true"></div>
+
+      <div class="process-step" role="listitem">
+        <div class="step-number" aria-hidden="true">01</div>
+        <span class="step-tag">Discover</span>
+        <h3 class="step-title">Map Your Needs</h3>
+        <p class="step-desc">We identify your exact operational friction points and technical requirements.</p>
+      </div>
+
+      <div class="process-step" role="listitem">
+        <div class="step-number" aria-hidden="true">02</div>
+        <span class="step-tag">Match</span>
+        <h3 class="step-title">Curate Your Team</h3>
+        <p class="step-desc">We pair you with specialized Tablas professionals vetted for your industry.</p>
+      </div>
+
+      <div class="process-step" role="listitem">
+        <div class="step-number" aria-hidden="true">03</div>
+        <span class="step-tag">Integrate</span>
+        <h3 class="step-title">Sync Seamlessly</h3>
+        <p class="step-desc">We sync your tools, communication channels, and secure data lines seamlessly.</p>
+      </div>
+
+      <div class="process-step" role="listitem">
+        <div class="step-number" aria-hidden="true">04</div>
+        <span class="step-tag">Scale</span>
+        <h3 class="step-title">Grow Together</h3>
+        <p class="step-desc">We continuously manage performance metrics and deliver exceptional output.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" aria-labelledby="cta-title">
+  <div class="cta-bg-text" aria-hidden="true">TC</div>
+  <div class="cta-inner">
+    <div class="cta-section-label">Ready to Begin?</div>
+    <h2 id="cta-title" class="cta-h2">Build Your <em>Elite</em><br>Offshore Team</h2>
+    <p class="cta-text">Stop compromising between cost and quality. Let us connect your business with the exceptional, dedicated talent of Tablas Creek.</p>
+    <a href="https://calendly.com/jeffreyrouisse/30min" target="_blank" rel="noopener" class="cta-btn" role="button">
+      Let's Talk Strategy
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 9h12M11 5l4 4-4 4"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-logo">
+    <span class="footer-logo-name">Tablas Creek</span>
+    <span class="footer-logo-sub">Business Process Outsourcing Services</span>
+  </div>
+  <p class="footer-copy">&copy; 2025 Tablas Creek. All rights reserved.</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .process-step').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
